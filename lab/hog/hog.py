@@ -319,6 +319,15 @@ def make_averaged(original_function, trials_count=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    assert type(trials_count) == int, 'trials_count must be an integer.'
+    assert trials_count > 0, 'trials_count at least once.'
+    def averaged_original(*args):
+        sum_results, count = 0.0, trials_count
+        while count > 0:
+            sum_results += original_function(*args)
+            count -= 1
+        return sum_results / trials_count
+    return averaged_original
     # END PROBLEM 8
 
 
@@ -333,6 +342,15 @@ def max_scoring_num_rolls(dice=six_sided, trials_count=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    # dice from 1 to 10 so no need to take_turn but roll_dice
+    num_rolls, biggest, biggest_num = 0, 0, 0
+    averaged_roll_dice = make_averaged(roll_dice, trials_count)
+    while num_rolls < 10:
+        num_rolls += 1
+        res = averaged_roll_dice(num_rolls, dice)
+        if res > biggest:
+            biggest, biggest_num = res, num_rolls
+    return biggest_num 
     # END PROBLEM 9
 
 
@@ -382,9 +400,13 @@ def bacon_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     rolls NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 10
-    return 6  # Replace this statement
+    # return 6  # Replace this statement
+    # why i need score argument
+    if free_bacon(opponent_score) < cutoff:
+        return num_rolls
+    else:
+        return 0
     # END PROBLEM 10
-
 
 def extra_turn_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     """This strategy rolls 0 dice when it triggers an extra turn. It also
@@ -392,7 +414,11 @@ def extra_turn_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     Otherwise, it rolls NUM_ROLLS.
     """
     # BEGIN PROBLEM 11
-    return 6  # Replace this statement
+    # return 6  # Replace this statement
+    points = free_bacon(opponent_score)
+    if not extra_turn(score + points, opponent_score) and points < cutoff:
+        return num_rolls
+    return 0  
     # END PROBLEM 11
 
 
@@ -402,7 +428,20 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 12
-    return 6  # Replace this statement
+    # return 6  # Replace this statement
+    # when you get another turn, you can get at least one more point
+    # consecutively having another turn may also means you get only one point in the last turn
+    # how can i know which is bigger between free and rolls 
+    # i have no idea about the dice
+    if score > 97:
+        return bacon_strategy(score, opponent_score, cutoff=1, num_rolls=1)
+    gap = opponent_score - score
+    # can i try to get pig_pass
+    if gap > 0 and gap < 6:
+        return extra_turn_strategy(score, opponent_score, cutoff=1, num_rolls=10)
+    # can i try to get swine_align
+    #num_rolls = max_scoring_num_rolls(dice=six_sided, trials_count=1000)
+    return extra_turn_strategy(score, opponent_score, cutoff=8, num_rolls=6) 
     # END PROBLEM 12
 
 ##########################
