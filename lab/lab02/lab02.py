@@ -52,11 +52,9 @@ def count_cond(condition):
         count, i = 0, 1
         while i <= num:
             if condition(num, i):
-               count += 1
+                count += 1
             i += 1
         return count
-        def aux(count=0, i=1):
-            if i
     return count_num
 
 
