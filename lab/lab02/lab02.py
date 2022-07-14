@@ -1,4 +1,4 @@
-
+e = lambda x: lambda y: lambda: x + y + z
 def lambda_curry2(func):
     """
     Returns a Curried version of a two-argument function FUNC.
@@ -121,4 +121,18 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
-
+    def cycle_times(n):
+       def cycle_argument(x):
+           quo, rem = n // 3, n % 3
+           while quo > 0:
+               x =  f3(f2(f1(x)))
+               quo -= 1
+           if rem == 0:
+               return x
+           if rem == 1:
+               return f1(x)
+           if rem == 2:
+               return f2(f1(x))
+       return cycle_argument 
+    return cycle_times
+    
