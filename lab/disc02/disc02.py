@@ -24,3 +24,19 @@ def make_keeper(n):
         for i in range(1, n + 1):
             if cond(i): print(i)
     return keeper
+
+def lambda_curry2(h):
+    """ Returns a Curried version of a two-argument function FUNC.
+    >>> from operator import add, mul, mod
+    >>> curried_add = lambda_curry2(add)
+    >>> add_three = curried_add(3)
+    >>> add_three(5)
+    8
+    >>> curried_mul = lambda_curry2(mul)
+    >>> mul_5 = curried_mul(5)
+    >>> mul_5(42)
+    210
+    >>> lambda_curry2(mod)(123)(10)
+    3
+    """
+    return lambda x: lambda y: h(x, y)
