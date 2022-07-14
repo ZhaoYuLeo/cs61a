@@ -26,7 +26,7 @@ def make_keeper(n):
     return keeper
 
 def lambda_curry2(h):
-    """ Returns a Curried version of a two-argument function FUNC.
+    """ Returns a Curried version of a two-argument function h.
     >>> from operator import add, mul, mod
     >>> curried_add = lambda_curry2(add)
     >>> add_three = curried_add(3)
@@ -40,3 +40,22 @@ def lambda_curry2(h):
     3
     """
     return lambda x: lambda y: h(x, y)
+
+def print_delayed(x):
+    """Return a new function. This new function, when called, will print out x and return another function with the same behavior.
+    >>> f = print_delayed(1)
+    >>> f = f(2)
+    1
+    >>> f = f(3)
+    2
+    >>> f = f(4)(5)
+    3
+    4
+    >>> f("hi")
+    5
+    <function print_delayed> # a function is returned
+    """
+    def delay_print(y):
+        print(x)
+        return print_delayed(y)
+    return delay_print
