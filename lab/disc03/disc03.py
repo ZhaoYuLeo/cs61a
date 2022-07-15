@@ -88,3 +88,21 @@ def merge(n1, n2):
     #     return rem1 + 10 * merge(n1 // 10, n2) 
     # else:
     #     return rem2 + 10 * merge(n1, n2 // 10)
+
+
+def make_func_repeater(f, x):
+    """Return another function which takes in another integer n and returns the result of applying f to x nth time.
+    >>> incr_1 = make_func_repeater(lambda x: x + 1, 1)
+    >>> incr_1(2) #same as f(f(x))
+    3
+    >>> incr_1(5)
+    6
+    """
+    # assert will execute nth times, seems not good.
+    def repeat(n):
+        assert n >= 0 and isinstance(n, int), "Repeat times must be a positive integer"
+        if n == 0:
+            return x
+        else:
+            return f(repeat(n - 1))
+    return repeat
