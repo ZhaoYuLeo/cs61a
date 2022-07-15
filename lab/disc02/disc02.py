@@ -25,6 +25,7 @@ def make_keeper(n):
             if cond(i): print(i)
     return keeper
 
+
 def lambda_curry2(h):
     """ Returns a Curried version of a two-argument function h.
     >>> from operator import add, mul, mod
@@ -40,6 +41,7 @@ def lambda_curry2(h):
     3
     """
     return lambda x: lambda y: h(x, y)
+
 
 def print_delayed(x):
     """Return a new function. This new function, when called, will print out x and return another function with the same behavior.
@@ -59,3 +61,28 @@ def print_delayed(x):
         print(x)
         return print_delayed(y)
     return delay_print
+
+
+def print_n(n): 
+    """Return a repeatable print function that can print the next n parameters. After the nth parameter, it just prints "done".
+    >>> f = print_n(2)
+    >>> f = f("hi")
+    hi
+    >>> f = f("hello")
+    hello
+    >>> f = f("bye")
+    done
+    >>> g = print_n(1)
+    >>> g("first")("second")("third")
+    first
+    done
+    done
+    <function inner_print>
+    """
+    def inner_print(x):
+        if n == 0: 
+            print("done")
+        else: 
+            print(x)
+        return print_n(n - 1 if n else n)
+    return inner_print
