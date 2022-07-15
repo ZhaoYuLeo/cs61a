@@ -66,6 +66,16 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    # You have to go through 1...n to find out the value. Maybe you can optimize it
+    # since you can directly caculate the result if you know switching points which are easy to find out
+    def pingpong_helper(index = 1, value = 1, switch = 1):
+        if index == n:
+            return value 
+        if index % 8 == 0 or num_eights(index):
+            return pingpong_helper(index + 1, value - switch, -switch) 
+        else:
+            return pingpong_helper(index + 1, value + switch, switch)
+    return pingpong_helper()
 
 
 def missing_digits(n):
