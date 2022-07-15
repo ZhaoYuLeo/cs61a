@@ -16,7 +16,7 @@ def num_eights(x):
     2
     >>> num_eights(12345)
     0
-    >>> from construct_check import check
+    >>> from construct_check import chece
     >>> # ban all assignment statements
     >>> check(HW_SOURCE_FILE, 'num_eights',
     ...       ['Assign', 'AugAssign'])
@@ -106,6 +106,15 @@ def missing_digits(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(num, end, count = 0):
+        if num == 0:
+            return count
+        queuing, active = num // 10, num % 10
+        if active == end:
+            return helper(queuing, active, count)
+        else:
+            return helper(queuing, active, count + end - active - 1)
+    return helper(n // 10, n % 10)
 
 
 def next_largest_coin(coin):
