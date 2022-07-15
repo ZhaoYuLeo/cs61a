@@ -106,3 +106,25 @@ def make_func_repeater(f, x):
         else:
             return f(repeat(n - 1))
     return repeat
+
+
+def is_prime(n):
+    """Return True if positive integer n is a prime number(has exactly two unique factors: 1 and itself) and False otherwise.
+    >>> is_prime(7)
+    True
+    >>> is_prime(10)
+    False
+    >>> is_prime(1)
+    False
+    """
+    assert n > 0 and isinstance(n, int), "is_prime takes in one positive integer."
+    def prime_helper(count = 2):
+        if n == 1:
+            return False 
+        if count > n - 1:
+            return True 
+        if n % count == 0:
+            return False
+        else:
+            return prime_helper(count + 1)
+    return prime_helper()
