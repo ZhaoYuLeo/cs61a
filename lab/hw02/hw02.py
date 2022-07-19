@@ -135,6 +135,23 @@ def next_largest_coin(coin):
         return 25
 
 
+def next_smallest_coin(coin):
+    """Return the smaller coin.
+    >>> next_smallest_coin(25)
+    10
+    >>> next_smallest_coin(10)
+    5
+    >>> next_smallest_coin(5)
+    1
+    >>> next_smallest_coin(1)
+    """
+    if coin == 25:
+        return 10
+    elif coin == 10:
+        return 5
+    elif coin == 5:
+        return 1
+
 def count_coins(total):
     """Return the number of ways to make change for total using coins of value of 1, 5, 10, 25.
     >>> count_coins(15)
@@ -151,6 +168,19 @@ def count_coins(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    largest_coin = 25
+    def helper(cur, coin):
+        if cur < 0:
+            return 0
+        if coin is None:
+            return 0 
+        if cur == 0:
+            return 1 
+        if not next_smallest_coin(coin) and cur % coin == 0:
+            return 1
+        else:
+            return helper(cur - coin, coin) + helper(cur, next_smallest_coin(coin))
+    return helper(total, largest_coin)
 
 
 from operator import sub, mul
@@ -166,4 +196,3 @@ def make_anonymous_factorial():
     True
     """
     return 'YOUR_EXPRESSION_HERE'
-
