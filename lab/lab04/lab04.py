@@ -47,6 +47,12 @@ def summation(n, term):
     """
     assert n >= 1
     "*** YOUR CODE HERE ***"
+    # add counting parameter for tail-recursion
+    def summation_helper(n, count = 0):
+        if n == 0:
+            return count
+        return summation_helper(n - 1, count + term(n))
+    return summation_helper(n)
 
 
 def paths(m, n):
