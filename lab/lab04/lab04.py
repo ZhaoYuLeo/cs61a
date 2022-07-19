@@ -69,6 +69,13 @@ def paths(m, n):
     1
     """
     "*** YOUR CODE HERE ***"
+    # seems to be expensive
+    def paths_helper(m, n):
+        if m == 0 or n == 0:
+            return 1
+        # go left or right
+        return paths_helper(m - 1, n) + paths_helper(m, n - 1)
+    return paths_helper(m-1, n-1)
 
 
 
