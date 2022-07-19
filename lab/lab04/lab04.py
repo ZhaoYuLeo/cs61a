@@ -19,6 +19,11 @@ def skip_add(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def skip_add_helper(n, count = 0):
+        if n == 1 or n == 0:
+            return n + count
+        return skip_add_helper(n - 2, n + count)
+    return skip_add_helper(n) 
 
 
 def summation(n, term):
