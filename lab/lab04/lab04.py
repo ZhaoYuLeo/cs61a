@@ -19,6 +19,7 @@ def skip_add(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    assert n >= 0 and isinstance(n, int), "Takes a non-negative integer as argument"
     def skip_add_helper(n, count = 0):
         if n == 1 or n == 0:
             return n + count
