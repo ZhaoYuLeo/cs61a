@@ -124,6 +124,15 @@ def max_subseq(n, t):
     5
     """
     "*** YOUR CODE HERE ***"
+    def helper(n, t):
+       if t == 0:
+           return 0 
+       if n < 10:
+           return n
+       rest, last = n // 10, n % 10 
+       # use the last digit or not use it
+       return max(helper(rest, t - 1) * 10 + last, helper(rest, t))
+    return helper(n, t)
 
 
 def add_chars(w1, w2):
