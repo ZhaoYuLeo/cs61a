@@ -17,15 +17,24 @@ def choose(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
-    def helper(index, k):
-        if index == len(paragraphs):
-            return ''
-        if select(paragraphs[index]):
-            k -= 1
-        if k < 0:
-            return paragraphs[index]
-        return helper(index + 1, k)
-    return helper(0, k)
+    # # recursion version
+    # def helper(index, k):
+    #     if index == len(paragraphs):
+    #         return ''
+    #     if select(paragraphs[index]):
+    #         k -= 1
+    #     if k < 0:
+    #         return paragraphs[index]
+    #     return helper(index + 1, k)
+    # return helper(0, k)
+
+    for paragraph in paragraphs:
+        if select(paragraph):
+            if k == 0:
+                return paragraph
+            else:
+                k -= 1
+    return ''
     # END PROBLEM 1
 
 
