@@ -1,4 +1,4 @@
-"""Typing test implementation"""
+"""Typing test implementaction"""
 
 from utils import lower, split, remove_punctuation, lines_from_file
 from ucb import main, interact, trace
@@ -51,6 +51,14 @@ def about(topic):
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    # len(paragraph_parts) * len(topic)
+    def check_about(paragraph):
+        paragraph_parts = split(lower(remove_punctuation(paragraph)))
+        for word in topic:
+            if word in paragraph_parts:
+                return True
+        return False
+    return check_about
     # END PROBLEM 2
 
 
