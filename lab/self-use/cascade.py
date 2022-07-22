@@ -48,3 +48,26 @@ def inverse_cascade(n):
             helper2(m//10)
     helper1(n)
     helper2(n)
+
+
+# using higher order function, the progress is much more clear. I think this shows a higher abstraction
+def inverse_cascade_higher_order(n):
+    """Print a inverse cascade of prefixes of n.
+    >>> inverse_cascade_higher_order(123)
+    1
+    12
+    123
+    12
+    1
+    """
+    grow(n)
+    print(n)
+    shrink(n)
+
+def f_then_g(f, g, n):
+    if n:
+        f(n)
+        g(n)
+
+grow = lambda n: f_then_g(grow, print, n//10)
+shrink = lambda n: f_then_g(print,  shrink,  n//10)
