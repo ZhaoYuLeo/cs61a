@@ -38,12 +38,12 @@ def count_k(n, k):
 
 
 def even_weighted(s):
-    """
+    """Takes a list s and returns a new list that keeps only the even-indexed elements of s and multiplies them by their corresponding index.
     >>> x = [1, 2, 3, 4, 5, 6]
     >>> even_weighted(x)
     [0, 6, 20]
     """
-    return 
+    return [index * number for index, number in enumerate(s) if index % 2 == 0]
 
 
 def max_product(s):
