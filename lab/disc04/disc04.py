@@ -14,17 +14,28 @@ def count_stair_ways(n):
     return helper(n)
 
 
+# another description of count_partitions ? no, full permutation 
 def count_k(n, k):
     """Return the number of paths
     >>> count_k(3, 3) # 3, 2 + 1, 1 + 2, 1 + 1 + 1
     4
-    >>> count_k(4, 4)
+    >>> count_k(4, 4) # 4, 3 + 1, 1 + 3, 2 + 1 + 1, 1 + 2 + 1, 1 + 1 + 2, 1 + 1 + 1 + 1
     8
     >>> count_k(10, 3)
     274
     >>> count_k(300, 1) # Only one step at a time
     1
     """
+    if n < 0:
+        return 0
+    if n == 0:
+        return 1
+    total = 0
+    # huge
+    for i in range(1, k + 1):
+        total += count_k(n - i, k)
+    return total
+
 
 def even_weighted(s):
     """
