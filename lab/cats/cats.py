@@ -79,11 +79,22 @@ def accuracy(typed, reference):
     >>> accuracy('', 'Cute Dog.')
     0.0
     """
+    # split will take care of \t, \n
     typed_words = split(typed)
     reference_words = split(reference)
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
     # END PROBLEM 3
+    typed_length = len(typed_words)
+    reference_length = len(reference_words)
+    if typed_length == 0 and reference_length != 0:
+        return 0.0
+    i, count = 0, 0
+    while i < min(typed_length, reference_length):
+        if typed_words[i] == reference_words[i]:
+            count += 1
+        i += 1
+    return count * 100 / typed_length
 
 
 def wpm(typed, elapsed):
