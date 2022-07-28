@@ -98,10 +98,20 @@ def accuracy(typed, reference):
 
 
 def wpm(typed, elapsed):
-    """Return the words-per-minute (WPM) of the TYPED string."""
+    """Return the words-per-minute (WPM) of the TYPED string.
+    >>> wpm("12345", 3)
+    20.0
+    >>> wpm("a b c", 20)
+    3.0
+    >>> wpm("", 10)
+    0.0
+    """
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    typical_word_len = 5
+    elapsed_minute = elapsed / 60
+    return len(typed) / typical_word_len / elapsed_minute 
     # END PROBLEM 4
 
 
