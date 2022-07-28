@@ -2,7 +2,7 @@ def count_stair_ways(n):
     """Return the number of ways you can go up the flight of stairs which has n steps by taking 1 or 2 steps each time
     Assume n is positive
     >>> count_stair_ways(3)
-    3 
+    3
     """
     assert n > 0 and isinstance(n, int), "Steps of the flight of stairs are larger than zero"
     def helper(steps):
@@ -56,3 +56,9 @@ def max_product(s):
     >>> max_product([])
     1
     """
+    #result = max(s[index] * helper(index + 2), s[index] * helper(index + 3))
+    #for k in range(index + 1, length - index):
+    if s == []:
+        return 1
+    # only compare two subsequences: s[2i + 1], s[2i]. not all non-consecutive subsequences
+    return max(s[0] * max_product(s[2:]), max_product(s[1:]))
