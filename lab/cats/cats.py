@@ -119,9 +119,25 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     """Returns the element of VALID_WORDS that has the smallest difference
     from USER_WORD. Instead returns USER_WORD if that difference is greater
     than LIMIT.
+    >>> abs_diff = lambda w1, w2, limit: abs(len(w2) - len(w1))
+    >>> autocorrect("cul", ["culture", "cult", "cultivate"], abs_diff, 10)
+    "cult"
+    >>> autocorrect("cul", ["culture", "cult", "cultivate"], abs_diff, 0)
+    "cul"
+    >>> first_diff = lambda w1, w2, limit: 1 if w1[0] != w2[0] else 0
+    >>> autocorrect("inside", ["idea", "inside"], first_diff, 0.5)
+    "inside"
     """
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    if user_word in valid_words:
+        return user_word
+    # really useful. higher-order. reminds me of filter.
+    lowest = min(valid_words, key=lambda x:diff_function(user_word, x, limit))
+    if diff_function(user_word, lowest, limit) > limit:
+        return user_word
+    else:
+        return lowest
     # END PROBLEM 5
 
 
@@ -129,9 +145,24 @@ def shifty_shifts(start, goal, limit):
     """A diff function for autocorrect that determines how many letters
     in START need to be substituted to create GOAL, then adds the difference in
     their lengths.
+    >>> big_limit = 10
+    >>> shifty_shifts("car", "cad", big_limit)
+    1
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    # assert False, 'Remove this line'
+    def helper(start, goal, diff):
+        # stop recusion when limit reached
+        if diff > limit:
+            return diff
+        if start == "" or goal == "":
+            # keep track of own length. cost of len is O(1)
+            return diff + abs(len(goal) - len(start))
+        if start[0] == goal[0]:
+            return helper(start[1:], goal[1:], diff)
+        else:
+            return helper(start[1:], goal[1:], diff + 1)
+    return helper(start, goal, 0)
     # END PROBLEM 6
 
 
