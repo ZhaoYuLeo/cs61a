@@ -206,9 +206,29 @@ def final_diff(start, goal, limit):
 
 
 def report_progress(typed, prompt, user_id, send):
-    """Send a report of your id and progress so far to the multiplayer server."""
+    """Send a report of your id and progress so far to the multiplayer server.
+    >>> print_progress = lambda d: print('ID:', d['id'], 'Progress:', d['progress'])
+    >>> typed = ['I', 'have', 'begun']
+    >>> prompt = ['I', 'have', 'begun', 'to', 'type']
+    >>> print_progress({'id': 1, 'progress': 0.6})
+    ID: 1 Progress: 0.6
+    >>> report_progress(['I', 'begun'], prompt, 2, print_progress)
+    ID: 2 Progress: 0.2
+    0.2
+    """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    typed_correct = 0
+    prompt_count = len(prompt)
+    total = min(len(typed), prompt_count)
+    for i in range(0, total):
+        if typed[i] == prompt[i]:
+            typed_correct += 1
+        else:
+            break
+    progress = typed_correct / prompt_count 
+    send({'id': user_id, 'progress': progress})
+    return progress
     # END PROBLEM 8
 
 
