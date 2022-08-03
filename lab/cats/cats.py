@@ -255,6 +255,8 @@ def time_per_word(times_per_player, words):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    times = [[timestamp[i] - timestamp[i - 1] for i in range(1, len(timestamp))] for timestamp in times_per_player]
+    return game(words, times)
     # END PROBLEM 9
 
 
