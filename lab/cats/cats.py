@@ -267,12 +267,41 @@ def fastest_words(game):
         game: a game data abstraction as returned by time_per_word.
     Returns:
         a list of lists containing which words each player typed fastest
+    >>> p0 = [2, 2, 3]
+    >>> p1 = [6, 1, 2]
+    >>> fastest_words(game(['What', 'great', 'luck'], [p0, p1]))
+    [['What'], ['great', 'luck']]
+    >>> p2 = [4, 3, 1]
+    >>> fastest_words(game(['What', 'great', 'luck'], [p0, p1, p2]))
+    [['What'], ['great'], ['luck']]
     """
     player_indices = range(len(all_times(game)))  # contains an *index* for each player
     word_indices = range(len(all_words(game)))    # contains an *index* for each word
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
+    fastest = [[] for _ in player_indices]
+    for word_index in word_indices:
+        fastest_player_index = least_item(player_indices, time_curry(game)(word_index))
+        fastest[fastest_player_index].append(word_at(game, word_index))
+    return fastest 
     # END PROBLEM 10
+
+def time_curry(game):
+    def time_w(word_index):
+        def time_p(player_num):
+            return time(game, player_num, word_index)
+        return time_p
+    return time_w
+
+
+def least_item(items, fun):
+    """Take a list and a function return the element in the list which gets the least result using the function.
+    """
+    least = items[0]
+    for i in items[1:]:
+        if fun(i) < fun(least):
+            least = i
+    return least
 
 
 def game(words, times):
