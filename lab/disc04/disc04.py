@@ -10,13 +10,15 @@ def count_stair_ways(n):
             return 0
         if steps == 0:
             return 1
+        # "as a general rule of thumb, whenever you need to try multiple possibilities at the same time,
+        # you should consider using tree recursion."
         return helper(steps - 1) + helper(steps - 2)
     return helper(n)
 
 
 # another description of count_partitions ? no, full permutation 
 def count_k(n, k):
-    """Return the number of paths
+    """Return the number of paths when we are able to take up to and including k steps at a time
     >>> count_k(3, 3) # 3, 2 + 1, 1 + 2, 1 + 1 + 1
     4
     >>> count_k(4, 4) # 4, 3 + 1, 1 + 3, 2 + 1 + 1, 1 + 2 + 1, 1 + 1 + 2, 1 + 1 + 1 + 1
@@ -31,6 +33,8 @@ def count_k(n, k):
     if n == 0:
         return 1
     total = 0
+    # "It is sometimes the case that a tree recursive problem also involves iteration:
+    # for example, you might use a while loop to add together multiple recursive calls."
     # huge
     for i in range(1, k + 1):
         total += count_k(n - i, k)
@@ -47,8 +51,7 @@ def even_weighted(s):
 
 
 def max_product(s):
-    """Return the maximum product that can be formed using non-consecutive elements of s.
-    
+    """Return the maximum product that can be formed using non-consecutive elements of s. The input list will contain only numbers greater than or equal to 2. 
     >>> max_product([10, 3, 1, 9, 2]) # 10 * 9
     90
     >>> max_product([5, 10, 5, 10, 5]) # 5 * 5 * 5
@@ -60,5 +63,5 @@ def max_product(s):
     #for k in range(index + 1, length - index):
     if s == []:
         return 1
-    # only compare two subsequences: s[2i + 1], s[2i]. not all non-consecutive subsequences
+    # only compare two subsequences: s[2i], s[2i + 1]. not all non-consecutive subsequences
     return max(s[0] * max_product(s[2:]), max_product(s[1:]))
