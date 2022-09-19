@@ -337,7 +337,18 @@ def add_trees(t1, t2):
       5
     """
     "*** YOUR CODE HERE ***"
+    def add_branches_in_same_level(big, small):
+        # return [(add_trees(big[i], small[i])) if i < len(small) else (big[i]) for i in range(len(big))]
+        added = [] 
+        for i in range(len(big)):
+            if i < len(small):
+                added.append(add_trees(big[i], small[i]))
+            else:
+                added.append(big[i])
+        return added
 
+    big, small = (branches(t1), branches(t2)) if len(t1) > len(t2) else (branches(t2), branches(t1))
+    return tree((label(t1) + label(t2)), add_branches_in_same_level(big, small))
 
 
 def build_successors_table(tokens):
