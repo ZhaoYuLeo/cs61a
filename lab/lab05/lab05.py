@@ -285,11 +285,24 @@ def riffle(deck):
     [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    # length = len(deck) # O(1)
+    # mid = length // 2
+    # shuffled = []
+    # for i in range(0, mid):
+    #     shuffled.append(deck[i])
+    #     shuffled.append(deck[mid + i])
 
+    # # add the last card when len(DECK) is odd
+    # if length % 2:
+    #     shuffled.append(deck[length - 1])
+    # return shuffled
+    return [deck[(len(deck) + i) // 2] if i % 2 else deck[i // 2] for i in range(len(deck))]
 
 def add_trees(t1, t2):
-    """
+    """Produces a new tree where each corresponding node from first tree
+    is added with the node from the second tree. If a node at any particular
+    position is present in one tree but not the other, it should be present
+    in the new tree as well.
     >>> numbers = tree(1,
     ...                [tree(2,
     ...                      [tree(3),
@@ -324,6 +337,7 @@ def add_trees(t1, t2):
       5
     """
     "*** YOUR CODE HERE ***"
+
 
 
 def build_successors_table(tokens):
