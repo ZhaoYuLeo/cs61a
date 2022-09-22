@@ -25,6 +25,8 @@ def max_depth(t):
         h = max(h, 1 + max_depth(b)) 
     return h
 
+# Arms-length recursion complicates our code and obscures the functionality of recursive function.
+# We always want our recursive case to be handling one and only one recursive level.
 def min_depth(t):
     """A simple function to return the distance between t's root and its closest leaf
     """
@@ -32,7 +34,7 @@ def min_depth(t):
         return 0 # Base case---the distance between a node and itself is zero
     h = float('inf') # Python's version of infinity
     for b in branches(t):
-        if is_leaf(b): return 1 #!!!
+        if is_leaf(b): return 1 #!!! should be done by the next level of recursion
         h = min(h, 1 + min_depth(b))
     return h
 
