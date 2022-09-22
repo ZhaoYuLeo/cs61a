@@ -10,6 +10,43 @@ def height(t):
 
     return 1 + max([height(branch) for branch in branches(t)])
 
+def max_depth(t):
+    """Return the longest path from the root to a leaf
+    
+    >>> t = tree(3, [tree(5, [tree(1)]), tree(2)])
+    >>> height(t)
+    2
+    """
+    if is_leaf(t):
+        return 0
+    h = 0 
+    for b in branches(t):
+    # we can use h holding the result of the last recursion. fantastic
+        h = max(h, 1 + max_depth(b)) 
+    return h
+
+def min_depth(t):
+    """A simple function to return the distance between t's root and its closest leaf
+    """
+    if is_leaf(t):
+        return 0 # Base case---the distance between a node and itself is zero
+    h = float('inf') # Python's version of infinity
+    for b in branches(t):
+        if is_leaf(b): return 1 #!!!
+        h = min(h, 1 + min_depth(b))
+    return h
+
+def min_depth(t):
+    """A simple function return the distance between t's root and its closest leaf
+    """
+    if is_leaf(t):
+        return 0
+    h = float('inf')
+    for b in branches(t):
+        # Still works fine!
+        h = min(h, 1 + min_depth(b))
+    return h
+
 def max_path_sum(t):
     """Return the maximum path sum of the tree which is the maximum sum of the values along any path in the tree.
     >>> t = tree(1, [tree(5, [tree(1), tree(3)]), tree(10)])
