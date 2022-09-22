@@ -54,6 +54,37 @@ def find_path(tree, x):
         result.reverse()
     return result
 
+# Binary Numbers
+
+def prune_binary(t, nums):
+    """Takes in a tree consisting of '0's and '1's t and a list of "binary numbers" nums and returns a new tree that contains only the numbers in nums that exist in t. If there are no numbers in nums that exist in t, return None. Definition: Each binary number is represented as a string. A binary number n exists in t if there is some path from the root to leaf of t whose values are equal to n.
+
+    >>> t = tree("1", [tree("0", [tree("0"), tree("1")]), tree("1", [tree("0")])])
+  	>>> print_tree(prune_binary(t, ["01", "110", "100"]))
+	1
+	  0
+	    0
+	  1
+	    0
+    """
+    # no need to go on if nums is []
+    if not nums:
+        return None
+
+    if is_leaf(t):
+        if label(t) in nums:
+            return t
+        return None
+    else:
+        next_valid_nums = [n[1:] for n in nums if (n[0] == label(t) and n[1:])] 
+        new_branches = []
+        for b in branches(t):
+            pruned_branch = prune_binary(b, next_valid_nums)
+            if pruned_branch is not None:
+                new_branches = new_branches + [pruned_branch]
+        if not new_branches:
+            return None
+        return tree(label(t), new_branches)
 
 # Tree ADT
 
