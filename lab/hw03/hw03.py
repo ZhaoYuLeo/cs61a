@@ -265,10 +265,13 @@ def interval(a, b):
 def lower_bound(x):
     """Return the lower bound of interval x."""
     "*** YOUR CODE HERE ***"
+    return min(x)
 
 def upper_bound(x):
     """Return the upper bound of interval x."""
     "*** YOUR CODE HERE ***"
+    return max(x)
+
 def str_interval(x):
     """Return a string representation of interval x.
     """
@@ -280,31 +283,53 @@ def add_interval(x, y):
     lower = lower_bound(x) + lower_bound(y)
     upper = upper_bound(x) + upper_bound(y)
     return interval(lower, upper)
+
 def mul_interval(x, y):
     """Return the interval that contains the product of any value in x and any
-    value in y."""
-    p1 = x[0] * y[0]
-    p2 = x[0] * y[1]
-    p3 = x[1] * y[0]
-    p4 = x[1] * y[1]
-    return [min(p1, p2, p3, p4), max(p1, p2, p3, p4)]
-
+    value in y.
+    >>> str_interval(mul_interval(interval(-1, 2), interval(4, 8)))
+    '-8 to 16'
+    """
+    # there are some data abstraction violations, so help him fix his code before someone sets it on fire:
+    # p1 = x[0] * y[0]
+    # p2 = x[0] * y[1]
+    # p3 = x[1] * y[0]
+    # p4 = x[1] * y[1]
+    # return [min(p1, p2, p3, p4), max(p1, p2, p3, p4)]
+    lbx, lby, ubx, uby = lower_bound(x), lower_bound(y), upper_bound(x), upper_bound(y)
+    p1, p2, p3, p4 = lbx * lby, lbx * uby, ubx * lby, ubx * uby 
+    return interval(min(p1, p2, p3, p4), max(p1, p2, p3, p4))
 
 def sub_interval(x, y):
     """Return the interval that contains the difference between any value in x
-    and any value in y."""
+    and any value in y.
+    >>> str_interval(sub_interval(interval(-1, 2), interval(4, 8)))
+    '-9 to -2'
+    """
     "*** YOUR CODE HERE ***"
-
+    p1 = lower_bound(x) - upper_bound(y)
+    p2 = upper_bound(x) - lower_bound(y) 
+    return interval(p1, p2)
 
 def div_interval(x, y):
     """Return the interval that contains the quotient of any value in x divided by
     any value in y. Division is implemented as the multiplication of x by the
-    reciprocal of y."""
+    reciprocal of y.
+    >>> str_interval(div_interval(interval(-1, 2), interval(4, 8)))
+    '-0.25 to 0.5'
+    >>> 
+    """
     "*** YOUR CODE HERE ***"
+    # it is not clear what it means to divide by an interval that spans zero
+    assert upper_bound(y) * lower_bound(y) > 0, "AssertionError"
     reciprocal_y = interval(1/upper_bound(y), 1/lower_bound(y))
     return mul_interval(x, reciprocal_y)
 
-
+# Lem has noticed that the formula for parallel resistors can be written in two algebraically equivalent ways:
+# par1(r1, r2) = (r1 * r2) / (r1 + r2) 
+# or
+# par2(r1, r2) = 1 / (1/r1 + 1/r2)
+# He has written the following two programs, each of which computes the parallel_resistors formula differently::
 def par1(r1, r2):
     return div_interval(mul_interval(r1, r2), add_interval(r1, r2))
 
@@ -313,6 +338,8 @@ def par2(r1, r2):
     rep_r1 = div_interval(one, r1)
     rep_r2 = div_interval(one, r2)
     return div_interval(one, add_interval(rep_r1, rep_r2))
+
+# Lem complains that Alyssa's program gives different answers for the two ways of computing. This is a serious complaint.
 def check_par():
     """Return two intervals that give different results for parallel resistors.
 
@@ -322,13 +349,17 @@ def check_par():
     >>> lower_bound(x) != lower_bound(y) or upper_bound(x) != upper_bound(y)
     True
     """
-    r1 = interval(1, 1) # Replace this line!
-    r2 = interval(1, 1) # Replace this line!
+    # precision loss
+    r1 = interval(1, 4) # Replace this line!
+    r2 = interval(3, 4) # Replace this line!
     return r1, r2
 
-
+# Eva Lu Ator, another user, has also noticed. She says that the problem is multiple references to the same interval.
+# a formula to compute with intervals using Alyssa's system will produce tighter error bounds if it can be written in such a form that no variable that represents an uncertain number is repeated.
+# Thus, par2 is a better program for parallel resistances than par1
+# my friend is so intelligent 
 def multiple_references_explanation():
-    return """The multiple reference problem..."""
+    return """The multiple reference problem... the interval endpoint returned by par1 was caculated from different r1'(r2') in the interval r1(r2). But they need to be consistent. Although they are interval, we should take the same value in the interval for numerator and denominator."""
 
 
 def quadratic(x, a, b, c):
@@ -341,8 +372,15 @@ def quadratic(x, a, b, c):
     '0 to 10'
     """
     "*** YOUR CODE HERE ***"
-
-
+    def f(t):
+        return a*t*t + b*t + c
+    extreme_point = -b/(2*a)
+    up, low = upper_bound(x), lower_bound(x)
+    f_up, f_low, f_extrem_point = f(up), f(low), f(extreme_point)
+    if up < extreme_point or low > extreme_point:
+        return interval(min(f_up, f_low), max(f_up, f_low)) 
+    else:
+        return interval(min(f_up, f_low, f_extrem_point), max(f_up, f_low, f_extrem_point))
 
 # Tree ADT
 
