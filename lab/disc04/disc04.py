@@ -15,6 +15,23 @@ def count_stair_ways(n):
         return helper(steps - 1) + helper(steps - 2)
     return helper(n)
 
+def count_stair_ways2(n):
+    """Return the same value as count_stair_ways but in a way of bottom-up. cost O(n)
+    >>> count_stair_ways(3)
+    3
+    """
+    assert n > 0 and isinstance(n, int), "Steps of the flight of stairs are larger than zero"
+    def helper(acc1, acc2, steps):
+        if (steps == n):
+            return acc1 + acc2
+        else:
+            return helper(acc1 + acc2, acc1, steps + 1)
+    if n < 0:
+        return 0
+    elif n == 0:
+        return 1
+    else:
+        return helper(1, 0, 1)
 
 # another description of count_partitions ? no, full permutation 
 def count_k(n, k):
