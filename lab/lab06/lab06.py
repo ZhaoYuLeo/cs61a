@@ -67,7 +67,7 @@ def make_fib_2():
     return helper(0, 1)
 
 def insert_items(lst, entry, elem):
-    """
+    """Takes in a list lst, an argument entry, and another argument elem. This function will check through each item present in lst to see if it is equivalent with entry. Upon finding an equivalent entry, the function should modify the list by placing elem into the list right after the found entry. At the end of the function, the modified list should be returned. Use list mutation to modify the original list, no new lists should be created or returned.
     >>> test_lst = [1, 5, 8, 5, 2, 3]
     >>> new_lst = insert_items(test_lst, 5, 7)
     >>> new_lst
@@ -83,4 +83,18 @@ def insert_items(lst, entry, elem):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    index_to_insert = [i for i,x in enumerate(lst) if x == entry]
+    for i, index in enumerate(index_to_insert):
+        lst.insert(i + index + 1, elem)
+    return lst
+    # skip = False
+    # for i, x in enumerate(lst):
+    #     if skip:
+    #         skip = False
+    #         continue
+    #     if x == entry:
+    #         # infinite loop when entry and elem are equal
+    #         lst.insert(i + 1, elem) # !!modified the object being iterated
+    #         if entry == elem:
+    #             skip = True
+    # return lst
