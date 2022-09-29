@@ -64,6 +64,17 @@ def make_withdraw(balance, password):
     True
     """
     "*** YOUR CODE HERE ***"
+    attempts = []
+    original = password
+    bank = make_bank(balance)
+    def withdraw(amount, password):
+        if len(attempts) == 3:
+            return "Frozen account. Attempts: " + str(attempts)
+        if password == original:
+            return bank("withdraw", amount)
+        attempts.append(password)
+        return 'Incorrect password'
+    return withdraw 
 
 
 def repeated(t, k):
