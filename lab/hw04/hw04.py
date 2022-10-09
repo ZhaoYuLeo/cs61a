@@ -99,6 +99,15 @@ def repeated(t, k):
     """
     assert k > 1
     "*** YOUR CODE HERE ***"
+    pre, count = None, 1 
+    for value in t:
+        if pre != value:
+            pre = value
+            count = 1
+        else:
+            count += 1 
+        if count == k:
+            return value 
 
 
 def permutations(seq):
