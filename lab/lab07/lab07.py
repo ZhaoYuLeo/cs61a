@@ -45,4 +45,7 @@ def hailstone(n):
     1
     """
     "*** YOUR CODE HERE ***"
-
+    yield n 
+    if n != 1:
+        suc = n // 2 if n % 2 == 0 else 3 * n + 1
+        yield from hailstone(suc)
