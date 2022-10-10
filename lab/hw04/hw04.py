@@ -133,6 +133,18 @@ def permutations(seq):
     [['a', 'b'], ['b', 'a']]
     """
     "*** YOUR CODE HERE ***"
+    # generate means i would yield one order one time. this process has no repeat
+    # how can i ensure this
+    # where i am, where i go, when i stop
+    e = seq[0]
+    if len(seq) == 1:
+        yield [e]
+    else:
+        for p in permutations(seq[1:]):
+            new_range = range(len(p) + 1)
+            for pos in new_range:
+                # insert the first element of seq into array p at the index pos
+                yield [p[i] if i < pos else p[i - 1] if i > pos else e for i in new_range]
 
 
 def make_joint(withdraw, old_pass, new_pass):
