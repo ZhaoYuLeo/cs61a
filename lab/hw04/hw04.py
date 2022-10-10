@@ -133,9 +133,6 @@ def permutations(seq):
     [['a', 'b'], ['b', 'a']]
     """
     "*** YOUR CODE HERE ***"
-    # generate means i would yield one order one time. this process has no repeat
-    # how can i ensure this
-    # where i am, where i go, when i stop
     e = seq[0]
     if len(seq) == 1:
         yield [e]
