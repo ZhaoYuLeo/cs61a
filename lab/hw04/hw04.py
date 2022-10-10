@@ -228,7 +228,30 @@ def remainders_generator(m):
     11
     """
     "*** YOUR CODE HERE ***"
+    def naturals_remainder(r):
+        num_gen = naturals()
+        while True:
+            num = next(num_gen)
+            if num % m == r:
+                yield num
+    for i in range(m):
+        yield naturals_remainder(i)
 
+   # def naturals_remainder(num_gen, r):
+   #     num = next(num_gen)
+   #     if num % m == r:
+   #         yield num
+   #     yield from naturals_remainder(num_gen, r)
+
+   # def multiple_with(x):
+   #     yield x * m
+   #     yield from multiple_with(x + 1)
+
+   # yield multiple_with(1)
+
+   # for i in range(1, m):
+   #     yield naturals_remainder(naturals(), i)
+        
 
 def naturals():
     """A generator function that yields the infinite sequence of natural
