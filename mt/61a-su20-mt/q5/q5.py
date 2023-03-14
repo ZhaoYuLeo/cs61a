@@ -31,6 +31,7 @@ def subsaltshaker(disk):
     >>> subsaltshaker(20) # no saltshakers in this number
     False
     """
+    # current_digit_solu = disk % 10
     current_digit = 0
     count = 0
     while disk:

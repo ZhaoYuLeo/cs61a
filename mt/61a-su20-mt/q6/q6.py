@@ -39,6 +39,19 @@ def copycat(lst1, lst2):
         return copycat_helper(index + 1, new_index + lst2[index] , new_lst) 
     return copycat_helper(0, 0, []) 
 
+
+def copycat_solu(lst1, lst2):
+    def copycat_helper(lst1, lst2, lst_so_far):
+        if len(lst1) == 0 or len(lst2) == 0:
+            return lst_so_far 
+        if lst2[0] >= 0:
+            lst_so_far = lst_so_far + [lst1[0] for _ in range(lst2[0])]
+        else:
+            lst_so_far = lst_so_far[:lst2[0]]
+        return copycat_helper(lst1[1:], lst2[1:], lst_so_far) 
+    return copycat_helper(lst1, lst2, []) 
+
+
 # ORIGINAL SKELETON FOLLOWS
 
 # def copycat(lst1, lst2):
