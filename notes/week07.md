@@ -204,7 +204,7 @@ total = b(3) + b(4)
 
    And another kind of problem might be um for two nodes at the same depth but not necessarily direct siblings um which one's the biggest or something like that like yeah what's the largest difference between two nodes that are at the same depth and this um it similarly involves just processing the whole tree but at the same time keeping track of an additional piece of information which is what depth you're at.
 
-   Y: but let me offer another thought here is processing data in a tree is just a slightly more complicated than processing data in a list so in a list you have neighbor elements right there are indexes different by one. In a tree you have the parent-child relationship but if I want to know for example that John was just saying what the smallest element in the list I've got to traverse the whole list if I want to know what the smallest element in the tree is I have to traverse the whole tree and there's <u>a couple different ways</u> of doing that. <u>You can go all the way down and then start making you way back</u> and the only other example I could think of too was that same notion of maybe you want to come because there's there's another sort of dimension if you will to a tree it's just not the ordering there's sort of the depth ordering that's the only other thing I can think about in which case as you're traversing a tree you have to keep track of that sort of informantion and then sort of analyze things at the back end.
+   Farid: but let me offer another thought here is processing data in a tree is just a slightly more complicated than processing data in a list so in a list you have neighbor elements right there are indexes different by one. In a tree you have the parent-child relationship but if I want to know for example that John was just saying what the smallest element in the list I've got to traverse the whole list if I want to know what the smallest element in the tree is I have to traverse the whole tree and there's <u>a couple different ways</u> of doing that. <u>You can go all the way down and then start making you way back</u> and the only other example I could think of too was that same notion of maybe you want to come because there's there's another sort of dimension if you will to a tree it's just not the ordering there's sort of the depth ordering that's the only other thing I can think about in which case as you're traversing a tree you have to keep track of that sort of informantion and then sort of analyze things at the back end.
 
 
 
@@ -236,7 +236,7 @@ but in both cases I guess we are illustrating exactly the general principle we w
 
 
 
-Y:
+Farid:
 
 it's always easy to sovle the problem when you know the answer.
 
@@ -270,7 +270,7 @@ I would have if I were designing the language I would prefer for the error to li
 
 The error really is that you‘re trying to use an x from the f1 frame and then assgin to an x in an f2 frame and  that isn't allowed. X needs to refer to one particular variable in a particular frame whenever it‘s uh used multiple times in the definition of the same function so one way to think about it is um the problem is not so much line 4. It‘s really the combination of line 3 and 4.
 
-Y：
+Farid：
 
 It's that you‘re using the variable in different ways so if I had taken out line 3, line 4 would have been fine so that‘s a one way to convince yourself that you know it‘s the combination of the two lines so you may as well do it in the first one but it also means that <u>python knows what‘s happening downstram right.</u> It‘s not It’s not blind to the code it is about to <u>evaluate</u>.
 
@@ -282,7 +282,7 @@ Yeah yeah this is the particularly spooky part I think for student who sees this
 
 
 
-Y：
+Farid：
 
 and by the way I agree that the error message here is awful right they should be able to give us a better error message than that yeah.
 
@@ -386,7 +386,7 @@ then to graft these things on.
 
 what a strange structure we have here. 
 
-Y：
+Farid：
 
 so we are making a tree. Do you have to return a tree with t in the node and bs as the children? 
 
@@ -402,15 +402,15 @@ I guess what we could do is we could uh graft these branches on all to onto all 
 
 
 
-Y：I was thinking that was going to be our base case. I wasn't expecting a recursive call there
+Farid：I was thinking that was going to be our base case. I wasn't expecting a recursive call there
 
 Yeah I'm  just trying to fit the template
 
-Y: yeah
+Farid connie: yeah
 
 Okay so now we've got a leaf. Uh oh I see so they're trying to set us up to do this here I think
 
-Y: yeah that makes more sense
+Farid: yeah that makes more sense
 
 `return tree(label(t))`
 
@@ -1150,10 +1150,419 @@ def read_papes(root='www.nytimes.com'):
 
 # Objects
 
+##### Classes & Objects
+
+A class combines (and abstracts) data and functions.
+
+An Object is an instantiation of a class.
+
+Built-in class(blueprint): String, Int
+
+Data: 'stop', 123
+
+Function: `append`, `+`
 
 
 
+Constructor:
+
+- Allocate memory
+- Initializes object with values
+- returns the address of the object
+- <u>similar to List</u>
 
 
+
+<!-- ball, big house, disposal, funciton and data，vigorously ball1.x , abstract out and dive in, professor farid, particular function associate with the object deals with the data associate with the object-->
+
+
+
+All values are object in Python. 
+
+##### Object-Oriented Programming
+
+A method for organizing modular programs.
+
+```python
+class <name>:
+    <suite>
+```
+
+A class statement creates a new class and binds that class to <name> in the first frame of the current environment.
+
+In `<suite>` assignments & def statement will create attribute of the class. Normally, they will create names in frames but class statements are special. <u>The suit is executed when the class statement is executed.</u>
+
+##### object construction
+
+```python
+>>> a = Account('Jim') # call 
+```
+
+
+
+When a class is called:
+
+1. A new instance of that class is created: 
+2. The `__init__`method of the class is called with the new object as its first argument (name `self`), along with any additional arguments provided in the call expression.
+
+```python
+class Account:
+    def __init__(self, account_holder):
+        self.balance = 0
+        self.holder = account_helper
+```
+
+
+
+`__init__` is called a constructor So you can see the relationship between data abstraction and the object-oriented programming system in Python.
+
+##### object identity
+
+```python
+>>> # "is" & "is not" test if two expressions evaluate to the same object, which is == in Java
+>>> c = a # binding an object to a new name is giving another name to the same object.
+>>> c is a
+True
+```
+
+##### methods
+
+```python
+class Account:
+    ...
+    def deposit(self, amount):
+        self.balance = self.balance + amount
+        return self.balance
+    ...
+```
+
+These def statements create function objects as always, but their names aren't bound in a particular frame. Instead, they're <u>bound as attributes of the class.</u>
+
+##### invoking methods
+
+All invoked methods have access to the object via the `self` parameter.
+
+Dot notation automatically supplies the first argument to a method.
+
+It's supplying the object instance that we're invoking the method on.
+
+```python
+>>> tom_account = Account('Tom')
+>>> tom_account.deposit(100) # Invoked with one argument
+100
+```
+
+##### dot expression
+
+Object receive messages via dot notation.
+
+Dot notation accesses attributes of the instance or its class.
+
+`<expression> . <name>`
+
+Dot expression evaluates to the value of the attribute looked up by <name> in the object that is the value of the <expression>
+
+Look up by name: you look in the instance and see, is this name bound there? If not, then you're looking at class.
+
+```python
+>>> Account
+<class '__main__.Account'>
+>>> john = Account('John')
+>>> john
+<__main__.Account object at 0x1006f2210>
+>>> type(john)
+<class '__main__.Account'>
+>>> john.balance
+0
+>>>
+```
+
+##### attributes
+
+Data that's stored with either an instance or the class itself.
+
+```python
+>>> john = Account('John')
+>>> john.balance
+0
+>>> getattr
+<built-in function getattr>
+>>> getattr(john, 'balance')
+0
+>>> john.deposit(100) # look up a name in the same way. just a specialized syntax
+100
+>>> hasattr(john, 'balance')
+True
+>>>
+```
+
+
+
+Looking up an attribute may return either an instance attribute or an attribute of the class. But basically you're looking at the instance first if it's not there, and that's the attribute that you get; Otherwise, you look in the class.
+
+##### Methods and functions
+
+Object + Function = Bound Method
+
+```python
+>>> type(Acocunt.deposit)
+<class 'function'>
+>>> type(tom_account.deposit)
+<class 'method'>
+
+>>> Account.deposit(tom_account, 100)
+1011
+>>> tom_account.deposit(1000)
+2011
+```
+
+
+
+`<expression>.<name>`
+
+To evaluate::
+
+1. evaluate `<expression>`,yields the object of the dot expression
+2. `<name>` is matched against the instance attributes of that object; **if an attribute with that name exists,** its value is returned.
+3. If not, `<name>`is looked up in the class, which yields a class attribute  value.
+4. That value is returned unless it is a function, in which case a bound method is returned instead.
+
+##### class attributes
+
+```python
+class Account:
+    interest = 0.02 # interest is not part of the instance that was somehow copied from the class
+```
+
+
+
+### QA
+
+
+
+[00:02](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=2s) Is a method a class attribute? 
+
+```python
+class Account:
+    def __init__(self, account_holder):
+        self.balance = 0
+        self.holder = account_helper
+ 
+    def deposit(self, amount):
+        self.balance = self.balance + amount
+        return self.balance
+```
+
+technically true, but usually called method.
+
+instance attributes in this example are holder and balance.
+
+<!--其实也能Account.deposit()这样调用-->
+
+[01:13](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=73s) What's a bound method and how is it used?
+
+```python
+>>> f = a.deposit
+>>> f
+<bound method Account.deposit of <__main__.Account object at 0x103bda3d0>>
+>>>
+```
+
+method is a some function that's defined within a class that has already had itself filled in. 
+
+Farid: It is just sort of you've delayed the evaluation a little bit.
+
+<!--让我想起了lambda x: lambda y: x + y；fun(): concrate(a, b) 之类用于delay evaluate的function。看起来这里的method不仅仅是instant attribute，也可以是class attribute，取决于你如何pass in self。python的class让我有种用function模拟object- orient的感觉-->
+
+
+
+ [04:13](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=253s) What can self refer to?
+
+Self will be the name that you use to refer to whatever that thing is that somebody built later so it's a placeholder just like you'd always have within parentheses of a function like stuff that hasn't been determined yet. But this one is special because it's going to be an account an object which is an instance of the account class. Because you know that is true, you know certain things about it like it was passed as the argument to init therefore it has a holder and a balance.
+
+
+
+ [05:20](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=320s) Can self only be used to refer to attributes, or also to methods?
+
+Sure. 
+
+
+
+ [06:31](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=391s) Is assigning to attributes using self a form of mutation?
+
+Yes, assigning to attributes or updating attributes
+
+```python
+>>> b = a
+>>> a.deposit(10)
+410
+>>> b.balance
+410
+>>>
+```
+
+It's the thing that's changing. It's not the variables that are changing.
+
+ [07:35](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=455s) In the example where an instance and its class share an attribute name, is there a way to remove the attribute from the instance?
+
+```python
+class Account:
+      interest = 0.03 # which is same as the following Account.interest = 0.03.
+
+>>> Account.interest = 0.03
+>>> a = Account('John')
+>>> a.interest
+0.03
+>>> a.interest = 0.05
+>>> a.interest
+0.05
+>>> Account.interest
+0.03
+>>> b = Account('Hany')
+>>> b.interest
+0.03
+>>>
+```
+
+<!-- This kind of mutation seems to be dangerous-->
+
+Is there anyway to go back making a to behave the same with b? 
+
+```python
+>>> del a.interest
+>>> a.interest
+0.04
+>>>
+```
+
+I just have never seen it used in the world and so it's possible but I don't it's hard for me to imagine a case where you would want it. 
+
+
+
+ [11:39](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=699s) Is there an equivalent in Python to the "public" and "private" keywords in Java?
+
+
+
+```python
+class Account:
+    def _check_that_balance_is_not_negative(self):
+        assert self.balance >= 0
+```
+
+There is but it's much lighter weight.
+
+You don't want anyone else to call but it just like is there to help `_fun_name_` the convention is to put on underscore in front of it and that basically says like oh this could change people shouldn't rely on this. Um but it's possible to call it anyway.
+
+But it's not enforced right, john I could still use call that function.
+
+You can call that function it like it doesn't show up when you generate the docs and stuff like that so there is like a little bit of soft enforcement.
+
+There is a stronger enforcement which is that if you put two underscores `__fun_name`  then this is genuinely hard to call because uh some crazy thing happens with naming that I wan't describe but um that is a feature that I think is quite rarely used because it's like hard to understand. 
+
+put a little underscore there and that lets everybody know this is not something that's part of the class it's just part of the implement.
+
+That's the very definition of a hack. 
+
+It is definitely a hacker.
+
+Most of cases where python is used um it's more collaborative rather than defensive ...... as long as all the programmers are friends and they're willing to understand how it works like that can can be perfectly productive too. So it's different approach to building libraries and building code that interacts with other people's
+
+
+
+ [15:25](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=925s) Is there a way to make a user-defined class immutable?
+
+You can specialize some kind of immutable class that already exist. You can make a special kind of tuple that behaves slightly differently than a regular tuple but fundamentally since tuples are immutable then this specialization would be too but other than that I think the answer is no.
+
+It's just that the python language doesn't force you not to change it so it's really kind of up to you as the user to read the docs and say oh this says and we're not suppose to change it and then it will work correctly.
+
+
+
+ [16:55](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=1015s) Should you use selector functions instead of accessing attributes directly?
+
+
+
+```python
+class Account:
+    def __init__(self, name):
+        ...
+        self.balance = 0
+        # self.balance = {}
+        ...
+        
+    ...
+    
+    def get_balance(self):
+        return self.balance
+    
+    def set_balance(self, value)
+        self.balance = value
+```
+
+And you know something you might typically see in a python program that this will indicate that it's not supposed to be accessed directly with like an underscore or something like that.
+
+
+One day you really want to represent this as  something else, the interface people access with hasn't changed. 
+
+It's a trade-off how much do you want to future proof your code to make sure you can change it later this is one technique to do it.
+
+If you have a more collaborative group of people all working together then it can be very nice to be able to kind of dip in below the abstraction and mess with something because the original programmer didn't anticipate exactly how you want to use it and you want to do some feature that manipulates the balance in a way that they didn't think about and so you want that like access to stuff that they didn't really think that you were going to access directly it just depends.
+
+ [21:56](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=1316s) What's the difference between remove and del?
+
+```python
+>>> a = [1, 2, 3]
+>>> a.remove(2)
+[1, 3]
+>>> del a[0] # del any kind of stuff maybe you will never use it
+>>> a
+[3]
+>>>
+```
+
+ [23:46](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=1426s) Can you explain Q10 and Q12 from Homework 3?
+
+```python
+>>> mul_interval(a, a) # Q10 which should be [0, 1]
+[-1, 1]
+
+def interval(a, b):
+    return [a, b]
+  
+def mul_interval(x, y): # assumed x and y are different numbers. You have implicit assumption which leads to the error.
+```
+
+
+
+Q12 The system that we've built combining with multiplication and division r1 and r2 but you've got r1 in there twice according to the way this multiplication function that we wrote works you're going to have like a different value for r1 (somewhere in that range) in one part of the equation than you do in another part of the equation and that is broken so I think that the point of this example was that it only works like this interval computation system that you've built only works if each interval only shows up onve if it ever shows up twice then you get the wrong answer.
+
+Yeah I think that's the nugget of it. When you have the same interval you are assuming that you're choosing the same value from that interval and the rules change.
+
+
+
+This has nothing to do with programming except for you do need to think about what you're representing in the world when you write your program and here's an example of that. It's like if you just like assume everything's fine um but you forgot that the interval you've representing only can be one number at once then you night run into trouble.
+
+
+
+ [32:27](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=1947s) What's a static method and when would you use it?
+
+```python
+>>> Math.square(12)
+144
+>>> m = Math()
+>>> m.square(12)
+144
+>>>
+# a static method is just a function
+class Math: # group stuff up
+    @staticmethod # get ride of self
+    def square(x):
+        return x * x
+```
+
+ [34:43](https://www.youtube.com/watch?v=ggcP16vtq4g&list=PL6BsET-8jgYXDUFNGMSL2MFPpjJfpmvWJ&index=8&t=2083s) Is there anything you don't like about Python's object system?
+
+I don't like how undisciplined it is. I don't like sort of the sloppiness of it that you can.. It‘s not quite as precise as I would like for example 'public' and 'private'
+
+Yeah it's really minimal and that's not ideal in a lot of settings especially when you're trying to collaborate on like really large programs across many people. I think the minimalist flavor of python's object system kind of limits the ability to scale this to really large programs. Now prople done it anyway but they've often done it by building a lot of extra infrastructure on top of the language like you come up with some system for defining  who is allowed to call what that isn't built into the language and that's just a shame right it's better to havve it kind of built in but it's a reasonable decision it's just a compromise like having something that's simple can be good becuase then people can learn it faster and uh when you read somebody else's code you're not faced with a bunch of like tricky stuff that you've never heard of at the same time it can be a barrier to like really using the language for something extemely ambitious so like I was at google for a while and there was a lot of python code but there were rules about how you were allowed to write your python code and like extra comments that you had to put everywhere that were pretty elaborate in order to basically force some kind of additional structure into the language that wasn't there and that you know that seems like uh indication that the language was not a good fit for how it was being used and yeah.
 
 ### HW 04: Nonlocal, Iterators
