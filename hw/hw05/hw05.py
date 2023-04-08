@@ -226,6 +226,14 @@ def preorder(t):
     [2, 4, 6]
     """
     "*** YOUR CODE HERE ***"
+    def helper(t, res):
+        res.append(t.label)
+        if t.is_leaf():
+            return res
+        for b in t.branches:
+            helper(b, res)
+        return res
+    return helper(t, []) 
 
 
 def path_yielder(t, value):
