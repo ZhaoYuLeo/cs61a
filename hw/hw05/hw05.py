@@ -156,6 +156,11 @@ def store_digits(n):
 
 def is_bst(t):
     """Returns True if the Tree t has the structure of a valid BST.
+    Each node has at most two children(a leaf is automatically a vaild binary search tree)
+    The children are valid binary search trees
+    For every node, the entries in that node's left child are less than or equal to the label of the node
+    For every node, the entries in that node's right child are greater than the label of the node
+    Note that, if a node has only one child, that child could be considered either the left or right child. You should take this into consideration.
 
     >>> t1 = Tree(6, [Tree(2, [Tree(1), Tree(4)]), Tree(7, [Tree(7), Tree(8)])])
     >>> is_bst(t1)
@@ -180,7 +185,35 @@ def is_bst(t):
     False
     """
     "*** YOUR CODE HERE ***"
+    if t.is_leaf():
+        return True
+    bs = t.branches
+    if len(bs) == 1:
+        return is_bst(bs[0])
+    if len(bs) == 2:
+        return bst_max(bs[0]) <= t.label \
+               and bst_min(bs[1]) > t.label \
+               and is_bst(bs[0]) \
+               and is_bst(bs[1])
+    return False
 
+def bst_min(bst):
+    """minimum in bst"""
+    if bst.is_leaf():
+        return bst.label
+    if len(bst.branches) == 1:
+        return min(bst.label, bst_min(bst.branches[0]))
+    else:
+        return bst_min(bst.branches[0])
+
+def bst_max(bst):
+    """maximum in bst"""
+    if bst.is_leaf():
+        return bst.label
+    if len(bst.branches) == 1:
+        return max(bst.label, bst_max(bst.branches[0]))
+    else:
+        return bst_max(bst.branches[1])
 
 def preorder(t):
     """Return a list of the entries in this tree in the order that they
