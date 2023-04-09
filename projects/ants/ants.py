@@ -164,6 +164,8 @@ class ThrowerAnt(Ant):
     implemented = True
     food_cost = 3
     damage = 1
+    min_range = 0
+    max_range = float('inf')
     # ADD/OVERRIDE CLASS ATTRIBUTES HERE
 
     def nearest_bee(self, beehive):
@@ -174,10 +176,14 @@ class ThrowerAnt(Ant):
         """
         # BEGIN Problem 3 and 4
         nearest = self.place
-        while not nearest.bees:
+        pos = 0
+        while ((pos < self.min_range) or
+                ((self.min_range <= pos < self.max_range) and
+                (not nearest.bees))):
             if nearest.entrance is beehive:
                 break
             nearest = nearest.entrance
+            pos += 1
         return rANTdom_else_none(nearest.bees)
         # END Problem 3 and 4
 
@@ -207,8 +213,9 @@ class ShortThrower(ThrowerAnt):
     food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 4
+    # not include
+    max_range = 3
+    implemented = True   # Change to True to view in the GUI # END Problem 4
 
 class LongThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at least 5 places away."""
@@ -217,7 +224,8 @@ class LongThrower(ThrowerAnt):
     food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
+    min_range = 5 
+    implemented = True   # Change to True to view in the GUI
     # END Problem 4
 
 class FireAnt(Ant):
@@ -228,7 +236,7 @@ class FireAnt(Ant):
     food_cost = 5
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 5
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 5
 
     def __init__(self, armor=3):
@@ -243,6 +251,13 @@ class FireAnt(Ant):
         if the fire ant dies.
         """
         # BEGIN Problem 5
+        reflected = amount
+        if amount >= self.armor:
+            reflected += self.damage
+        bees = self.place.bees[:]
+        for b in bees:
+            Bee.reduce_armor(b, reflected) 
+        Ant.reduce_armor(self, amount)
         "*** YOUR CODE HERE ***"
         # END Problem 5
 
