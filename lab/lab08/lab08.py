@@ -8,6 +8,26 @@ def convert_link(link):
     []
     """
     "*** YOUR CODE HERE ***"
+    # shallow iterative
+    # result = []
+    # while link is not Link.empty:
+    #     result.append(link.first)
+    #     link = link.rest
+    # return result
+
+    # shallow recursive
+    # if link is Link.empty:
+    #     return []
+    # return [link.first] + convert_link(link.rest)
+
+    # deep and expensive recursive
+    if link is Link.empty:
+        return []
+    if isinstance(link.first, Link):
+          return [convert_link(link.first)] + convert_link(link.rest)
+    else:
+          return [link.first] + convert_link(link.rest)
+
 
 
 def every_other(s):
@@ -28,6 +48,9 @@ def every_other(s):
     Link(4)
     """
     "*** YOUR CODE HERE ***"
+    if not (s is Link.empty or s.rest is Link.empty):
+        s.rest = s.rest.rest
+        every_other(s.rest)
 
 
 def cumulative_mul(t):
