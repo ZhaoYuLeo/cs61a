@@ -524,9 +524,8 @@ class ContainerAnt(Ant):
         # Special handling for container ants (this is optional)
         if place.ant is self:
             # Container was removed. Contained ant should remain in the game
-            Ant.remove_from(self, place)
-            place.ant = self.contained_ant
-            Insect.add_to(place.ant, place)
+            place.ant = place.ant.contained_ant
+            Insect.remove_from(self, place)
         else:
             # default to normal behavior
             Ant.remove_from(self, place)
@@ -536,6 +535,10 @@ class ContainerAnt(Ant):
         "*** YOUR CODE HERE ***"
         if self.contained_ant:
             self.contained_ant.action(gamestate)
+        if self.damage:
+            bees = self.place.bees[:]
+            for b in bees:
+                b.reduce_armor(self.damage)
         # END Optional 2
 
 class BodyguardAnt(ContainerAnt):
@@ -559,7 +562,7 @@ class TankAnt(ContainerAnt):
     food_cost = 6
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem Optional 3
-    implemented = False   # Change to True to view in the GUI
+    implemented = True# Change to True to view in the GUI
     # END Problem Optional 3
 
     def __init__(self, armor=2):
@@ -568,6 +571,7 @@ class TankAnt(ContainerAnt):
     def action(self, gamestate):
         # BEGIN Problem Optional 3
         "*** YOUR CODE HERE ***"
+        super().action(gamestate)
         # END Problem Optional 3
 ############
 # Statuses #
