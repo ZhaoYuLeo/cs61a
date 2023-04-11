@@ -391,6 +391,12 @@ class QueenAnt(ScubaThrower):
             while place_behind:
                 ant_behind = place_behind.ant 
                 if ant_behind and ant_behind.not_buffed:
+                    if isinstance(ant_behind, ContainerAnt) and ant_behind.contained_ant:
+                        ant_behind.contained_ant.damage *= 2
+                        # Never use this flag unless the container ant has be destoried.
+                        # The ant inside the container should be unique, I thought.
+                        # So this flag is always identical to the outside one.
+                        ant_behind.contained_ant.not_buffed = False
                     ant_behind.damage *= 2
                     ant_behind.not_buffed = False
                 place_behind = place_behind.exit
