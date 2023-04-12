@@ -63,6 +63,11 @@ def cumulative_mul(t):
     Tree(105, [Tree(15, [Tree(5)]), Tree(7)])
     """
     "*** YOUR CODE HERE ***"
+    if not t.is_leaf():
+        for b in t.branches:
+            cumulative_mul(b)
+        for b in t.branches:
+            t.label *= b.label
 
 
 def has_cycle(link):
