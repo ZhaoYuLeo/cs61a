@@ -85,6 +85,14 @@ def has_cycle(link):
     False
     """
     "*** YOUR CODE HERE ***"
+    # assert none of the elements is another linked list
+    def helper(link, before):
+        if link is Link.empty:
+            # If cycle exists in somewhere, it cannot reach here
+            return False
+        return link in before or helper(link.rest, before + [link])
+    return helper(link, [])
+
 
 def has_cycle_constant(link):
     """Return whether link contains a cycle.
@@ -98,7 +106,20 @@ def has_cycle_constant(link):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    def race(fast_runner, slow_runner):
+        # Reach the end of the track
+        if not fast_runner or not fast_runner.rest:
+            return False
+        fast_runner = fast_runner.rest.rest
+        slow_runner = slow_runner.rest
+        # If we are running in a cycle, two runners with different 
+        # but constant speed will eventually be met, when the distance
+        # is equal to the circle's.
+        if fast_runner is slow_runner:
+            return True
+        # Next step
+        return race(fast_runner, slow_runner)
+    return race(link, link)
 
 def reverse_other(t):
     """Mutates the tree such that nodes on every other (odd-depth) level
