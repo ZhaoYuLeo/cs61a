@@ -135,7 +135,17 @@ def reverse_other(t):
     Tree(1, [Tree(8, [Tree(3, [Tree(5), Tree(4)]), Tree(6, [Tree(7)])]), Tree(2)])
     """
     "*** YOUR CODE HERE ***"
-
+    def reverse(t, d):
+        if t.is_leaf():
+            return
+        if d % 2 == 0:
+            origin = [b.label for b in t.branches]
+            length = len(origin)
+            for i in range(length):
+                t.branches[i].label = origin[length - i - 1]
+        for b in t.branches:
+            reverse(b, d + 1)
+    reverse(t, 0)
 
 class Link:
     """A linked list.
