@@ -190,7 +190,20 @@ def combine_tree(t1, t2, combiner):
     zipped = zip(t1.branches, t2.branches)
     tree.branches = [combine_tree(b1, b2, combiner) for b1, b2 in zipped]
     return tree
-        
+
+def alt_tree_map(t, map_fn):
+    """ applies map_fn to all of the data at every other level of the tree,
+    starting at the root
+    >>> t = Tree(1, [Tree(2, [Tree(3)]), Tree(4)])
+    >>> negate = lambda x: -x
+    >>> alt_tree_map(t, negate)
+    Tree(-1, [Tree(2, [Tree(-3)]), Tree(4)])
+    """
+    t.label = map_fn(t.label)
+    for b in t.branches:
+        for sub_b in b.branches:
+            alt_tree_map(sub_b, map_fn)
+
 
 class Link:
     """To check if a linked list is an empty linked list:
