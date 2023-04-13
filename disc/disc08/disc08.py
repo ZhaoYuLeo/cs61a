@@ -172,6 +172,26 @@ def find_paths(t, entry):
             paths.append([t.label] + path)
     return paths
 
+
+def combine_tree(t1, t2, combiner):
+    """combines the values of two trees t1 and t2 together with the combiner funtion
+    >>> a = Tree(1, [Tree(2, [Tree(3)])])
+    >>> b = Tree(4, [Tree(5, [Tree(6)])])
+    >>> combined = combine_tree(a, b, mul)
+    >>> combined.label
+    4
+    >>> combined.branches[0].label
+    10
+    """
+    # assume that t1 and t2 have identical structure
+    tree = Tree(combiner(t1.label, t2.label))
+    if t1.is_leaf():
+        return tree
+    zipped = zip(t1.branches, t2.branches)
+    tree.branches = [combine_tree(b1, b2, combiner) for b1, b2 in zipped]
+    return tree
+        
+
 class Link:
     """To check if a linked list is an empty linked list:
     if link is Link.empty:
