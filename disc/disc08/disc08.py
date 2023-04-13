@@ -43,7 +43,7 @@ class B():
             ret += str(a)
         return ret
 
-## Linked Lists
+## 2 Linked Lists
 
 def sum_nums(lnk):
     """takes in a a linked list and returns the sum of all its elements
@@ -81,7 +81,105 @@ def multiply_lnks(lst_of_lnks):
         rest_lnks.append(lnk.rest)
     return Link(first, multiply_lnks(rest_lnks))
 
+def flip_two(lnk):
+    """mutates lnk so that every pair is flipped.
+    >>> one_lnk = Link(1)
+    >>> flip_two(one_lnk)
+    >>> one_lnk
+    Link(1)
+    >>> lnk = Link(1, Link(2, Link(3, Link(4, Link(5)))))
+    >>> flip_two(lnk)
+    >>> lnk
+    Link(2, Link(1, Link(4, Link(3, Link(5)))))
+    """
+    if lnk is Link.empty or lnk.rest is Link.empty:
+        # you shouldn't return anything
+        return 
+    lnk.first, lnk.rest.first = lnk.rest.first, lnk.first
+    flip_two(lnk.rest.rest)
+    
+def filter_link(link, f):
+    """returns a generator which yields the values of link for
+    which f returns True
+    >>> link = Link(1, Link(2, Link(3)))
+    >>> g = filter_link(link, lambda x: x % 2 == 0)
+    >>> next(g)
+    2
+    >>> next(g)
+    StopIteration
+    >>> list(filter_link(link, lambda x: x % 2 != 0))
+    [1, 3]
+    """
+    # # iteration
+    # while link is not Link.empty:
+    #     if f(link.first):
+    #         yield link.first
+    #     link = link.rest
+   
+    # recursion
+    if link is not Link.empty:
+        if f(link.first):
+            yield link.first
+        yield from filter_link(link.rest, f)
+
+
+## 3 Trees
+
+def make_even(t):
+    """takes in a tree t whose valuse are integers, and mutates the
+    tree such that all the odd integers are increased by 1 and all
+    the even integers remain the same
+    >>> t = Tree(1, [Tree(2, [Tree(3)]), Tree(4), Tree(5)])
+    >>> make_even(t)
+    >>> t.label
+    2
+    >>> t.branches[0].branches[0].label
+    4
+    """
+    if t.label % 2 == 1:
+        t.label += 1
+    for b in t.branches:
+        make_even(b)
+
+def square_tree(t):
+    """Mutates a Tree t by squaring all its elements.
+    >>> t = Tree(1, [Tree(2, [Tree(3)]), Tree(4), Tree(5)])
+    >>> square_tree(t)
+    >>> t.label
+    1
+    >>> t.branches[0].branches[0].label
+    9
+    """
+    # assume non-empty tree
+    t.label *= t.label
+    for b in t.branches:
+        square_tree(b)
+
+def find_paths(t, entry):
+    """returns a list of lists containing the nodes along each path from
+    the root of t to entry. Paths may return in any order.
+    >>> tree_ex = Tree(2, [Tree(7, [Tree(3), Tree(6, [Tree(5), Tree(11)])]), Tree(1, [Tree(5)])])
+    >>> find_paths(tree_ex, 5)
+    [[2, 7, 6, 5], [2, 1, 5]]
+    >>> find_paths(tree_ex, 12)
+    []
+    """
+    paths = []
+    if t.label == entry:
+        return [[entry]]
+    for b in t.branches:
+        for path in find_paths(b, entry):
+            paths.append([t.label] + path)
+    return paths
+
 class Link:
+    """To check if a linked list is an empty linked list:
+    if link is Link.empty:
+        print('This linked list is empty!')
+    else:
+        print('This linked list is not empty!')
+    """
+
     empty = ()
     def __init__(self, first, rest=empty):
         assert rest is Link.empty or isinstance(rest, Link)
@@ -101,3 +199,21 @@ class Link:
             string += str(self.first) + ' '
             self = self.rest
         return string + str(self.first) + '>'
+
+
+class Tree:
+    """
+    >>> t = Tree(3, [Tree(4), Tree(5)])
+    >>> t.label = 5
+    >>> t.label
+    5
+    """
+    def __init__(self, label, branches=[]):
+        for b in branches:
+            assert isinstance(b, Tree)
+        self.label = label
+        self.branches = branches
+
+    def is_leaf(self):
+        return not self.branches
+
