@@ -22,7 +22,8 @@ def subseqs(s):
     if len(s) == 0:
         return [[]]
     else:
-        return insert_into_all(s[0], subseqs(s[1:])) + subseqs(s[1:])
+        sub = subseqs(s[1:])
+        return insert_into_all(s[0], sub) + sub
 
 
 def inc_subseqs(s):
@@ -41,14 +42,14 @@ def inc_subseqs(s):
     """
     def subseq_helper(s, prev):
         if not s:
-            return ____________________
+            return [[]]
         elif s[0] < prev:
             return ____________________
         else:
-            a = ______________________
-            b = ______________________
+            a = ____________________
+            b = ____________________
             return insert_into_all(________, ______________) + ________________
-    return subseq_helper(____, ____)
+    return subseq_helper(___, ___)
 
 
 def num_trees(n):
