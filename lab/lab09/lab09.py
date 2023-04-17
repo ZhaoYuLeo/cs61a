@@ -40,16 +40,17 @@ def inc_subseqs(s):
     >>> sorted(seqs2)
     [[], [1], [1], [1, 1], [1, 1, 2], [1, 2], [1, 2], [2]]
     """
+    # assert the input list contains no negative elements
     def subseq_helper(s, prev):
         if not s:
             return [[]]
         elif s[0] < prev:
-            return ____________________
+            return subseq_helper(s[1:], prev)
         else:
-            a = ____________________
-            b = ____________________
-            return insert_into_all(________, ______________) + ________________
-    return subseq_helper(___, ___)
+            a = subseq_helper(s[1:], prev)
+            b = subseq_helper(s[1:], s[0])
+            return insert_into_all(s[0], b) + a
+    return subseq_helper(s, -1)
 
 
 def num_trees(n):
