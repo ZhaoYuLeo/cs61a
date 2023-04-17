@@ -54,7 +54,9 @@ def inc_subseqs(s):
 
 
 def num_trees(n):
-    """How many full binary trees have exactly n leaves? E.g.,
+    """How many possible full binary trees structures exist that have
+    exactly n leaves? A full binary tree is a tree where each node has
+    either 2 branches or 0 branches, but never 1 branch. E.g.,
 
     1   2        3       3    ...
     *   *        *       *
@@ -69,13 +71,21 @@ def num_trees(n):
     1
     >>> num_trees(3)
     2
+    >>> num_trees(4)
+    5
+    >>> num_trees(5)
+    14
     >>> num_trees(8)
     429
 
     """
-    if ____________________:
-        return _______________
-    return _______________
+    if n == 1 or n == 2:
+        return 1
+    # a = 0
+    # for k in range(1, n):
+    #     a += num_trees(k) * num_trees(n-k)
+    # return a
+    return sum(num_trees(k) * num_trees(n-k) for k in range(1, n))
 
 
 def make_generators_generator(g):
