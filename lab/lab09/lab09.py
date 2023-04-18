@@ -122,16 +122,26 @@ def make_generators_generator(g):
     6
     9
     """
+    # # solution
+    # def gen(i):
+    #     for entry in g():
+    #         if i <= 0:
+    #             return
+    #         yield entry
+    #         i -= 1
+    # i = 1
+    # for entry in g():
+    #     yield gen(i)
+    #     i += 1
+
     def gen(i):
-        for ___________ in ___________:
-            if _________________________:
-                _________________________
-            _______________________
-            _______________________
-    __________________________
-    for _________ in __________________:
-        ______________________________
-        ______________________________
+        for elem in g():
+            if elem == i: # assume
+                yield elem
+                return
+            yield elem 
+    for elem in g():
+        yield gen(elem)
 
 
 class Button:
