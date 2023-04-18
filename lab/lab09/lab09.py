@@ -231,15 +231,25 @@ def make_advanced_counter_maker():
     >>> tom_counter('global-count')
     1
     """
-    ________________
-    def ____________(__________):
-        ________________
-        def ____________(__________):
-            ________________
+    global_count = 0
+    def make_counter():
+        count = 0
+        def one_counter(msg):
+            nonlocal global_count, count
             "*** YOUR CODE HERE ***"
             # as many lines as you want
-        ________________
-    ________________
+            if msg == 'count':
+                count += 1
+                return count
+            if msg == 'global-count':
+                global_count += 1
+                return global_count
+            if msg == 'reset':
+                count = 0
+            if msg == 'global-reset':
+                global_count = 0
+        return one_counter
+    return make_counter
 
 
 def trade(first, second):
