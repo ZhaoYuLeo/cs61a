@@ -180,26 +180,26 @@ class Keyboard:
     """
 
     def __init__(self, *args):
-        ________________
-        for _________ in ________________:
-            ________________
+        self.buttons = {} 
+        for b in args:
+            self.buttons[b.pos] = b
 
     def press(self, info):
         """Takes in a position of the button pressed, and
         returns that button's output"""
-        if ____________________:
-            ________________
-            ________________
-            ________________
-        ________________
+        if info in self.buttons.keys():
+            b = self.buttons[info]
+            b.times_pressed += 1
+            return b.key
+        return ''
 
     def typing(self, typing_input):
         """Takes in a list of positions of buttons pressed, and
         returns the total output"""
-        ________________
-        for ________ in ____________________:
-            ________________
-        ________________
+        keys = '' 
+        for t in typing_input:
+            keys += self.press(t)
+        return keys
 
 
 def make_advanced_counter_maker():
