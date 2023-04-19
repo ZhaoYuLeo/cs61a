@@ -373,6 +373,9 @@ def insert(link, value, index):
 
 def deep_len(lnk):
     """ Returns the deep length of a possibly deep linked list.
+    The deep length of a linked list is the total number of non-link elements
+    in the list, as well as the total number if elements contained in all
+    contained lists.
 
     >>> deep_len(Link(1, Link(2, Link(3))))
     3
@@ -385,12 +388,12 @@ def deep_len(lnk):
     >>> deep_len(levels)
     5
     """
-    if ______________:
+    if lnk is Link.empty:
         return 0
-    elif ______________:
+    elif not isinstance(lnk, Link): 
         return 1
     else:
-        return _________________________
+        return deep_len(lnk.first) + deep_len(lnk.rest) 
 
 
 def make_to_string(front, mid, back, empty_repr):
