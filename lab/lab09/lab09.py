@@ -356,14 +356,18 @@ def insert(link, value, index):
     >>> insert(link, 4, 5)
     IndexError
     """
-    if ____________________:
-        ____________________
-        ____________________
-        ____________________
-    elif ____________________:
-        ____________________
+    if index == 0:
+        # print("mutate")
+        # print(link)
+        # link = Link(value, link)
+        # print(link)
+        link.rest = Link(link.first, link.rest)
+        link.first = value 
+        return
+    elif link.rest is Link.empty: 
+        raise IndexError
     else:
-        ____________________
+        insert(link.rest, value, index - 1)
 
 
 
