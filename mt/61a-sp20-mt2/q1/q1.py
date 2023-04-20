@@ -13,7 +13,6 @@ Definitions:
 3) A plucking order is "valid" if both of these conditions are true:
    (a) the plucking order contains all labels of t, and
    (b) in the plucking order, the label for each node of t appears after
-       the labels of all its descendant nodes. Thus, leaves appear first.
 
 Note: redwood, pine, and cyprus are all kinds of trees.
 """
@@ -45,8 +44,8 @@ def order(redwood):
     True
     """
     plucking_order = []
-    for b in ______:
-        ______
+    for b in redwood.branches:
+        plucking_order.extend(order(b))
     return plucking_order + [redwood.label]
 
 
@@ -107,23 +106,23 @@ def pluck(pine):
             """Return a copy of cyprus without leaf k and check that k is a
             leaf label, not an interior node label.
             """
-            if ______:
-                ______
+            if k == cyprus.label:
+                return 'Hey, not valid!'
             plucked_branches = []
             for b in cyprus.branches:
-                skip_this_leaf = ______ and ______
+                skip_this_leaf = b.is_leaf() and k == b.label 
                 if not skip_this_leaf:
                     plucked_branch_or_error = pluck_one_leaf(b)
                     if isinstance(plucked_branch_or_error, str):
                         return plucked_branch_or_error
                     else:
-                        ______
-            return Tree(______, plucked_branches)
+                        plucked_branches.append(plucked_branch_or_error) 
+            return Tree(cyprus.label, plucked_branches)
         nonlocal pine
         if pine.is_leaf():
             assert k == pine.label, 'all k must appear in pine'
             return 'success!'
-        ______
+        pine = pluck_one_leaf(pine) 
         if isinstance(pine, str):
             return pine
         return plucker
