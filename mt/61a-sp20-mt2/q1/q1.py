@@ -106,7 +106,8 @@ def pluck(pine):
             """Return a copy of cyprus without leaf k and check that k is a
             leaf label, not an interior node label.
             """
-            if k == cyprus.label:
+            # cyprus.is_leaf() and k == cyprus.label won't appear here
+            if not cyprus.is_leaf() and k == cyprus.label:
                 return 'Hey, not valid!'
             plucked_branches = []
             for b in cyprus.branches:
