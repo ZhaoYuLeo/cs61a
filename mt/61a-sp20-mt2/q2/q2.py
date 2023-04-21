@@ -89,8 +89,8 @@ def powers(n, k):
         if seed == 0:
             yield 0
         else:
-            for x in ______:
-                ______
-                ______
-    yield from filter(curry2(______)(______), build(n))
+            for x in build(seed // 10):
+                yield x
+                yield x * 10 + seed % 10
+    yield from filter(curry2(is_power)(k), build(n))
 
