@@ -44,12 +44,12 @@ def is_power(base, s):
     """
     assert base > 0 and s >= 0
     assert type(base) is int and type(s) is int
-    if ______:
+    if s == 1:
         return True
-    elif ______:
+    elif base == 1 or s == 0 or s % base != 0:
         return False
     else:
-        return ______
+        return is_power(base, s // base)
 
 
 curry2 = lambda f: lambda x: lambda y: f(x, y)
