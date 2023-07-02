@@ -20,6 +20,7 @@ earth   -> points to the func only(one) [parent=f2]
 
 
 f1: locals [parent=Global]
+only    -> func only(one) [parent=f2] #used to be 3 but been overrided in the following operations
 get     -> func get(out) [parent=f1]
 out     -> points to list in f2
 Return Value    -> points to func only [parent=f2]
@@ -34,5 +35,5 @@ Return Value    -> func λ(get) <line=5> [parent=f3]
 
 f4: λ <line=5> [parent=f3]
 get     5
-Return Value    -2
+Return Value    -2 #attention, out == -2
 """
