@@ -37,3 +37,19 @@ f4: λ <line=5> [parent=f3]
 get     5
 Return Value    -2 #attention, out == -2
 """
+
+spock, yoda = 1, 2
+luke = [[yoda], [spock], yoda ]
+yoda = 0
+yoda = [luke, luke[yoda][yoda] ]
+yoda.append(luke[:spock])
+
+"""
+Global frame
+spock   1
+yoda    2 changed to 0 changed to -> [->, 2, ->]
+                                     luke    [->]
+                                             the first item in luke
+luke    ->  [->, ->, 2]
+            [2]  [1]
+"""
