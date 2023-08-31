@@ -173,6 +173,8 @@ def find_paths(t, entry):
     return paths
 
 
+from operator import mul
+
 def combine_tree(t1, t2, combiner):
     """combines the values of two trees t1 and t2 together with the combiner funtion
     >>> a = Tree(1, [Tree(2, [Tree(3)])])
@@ -203,6 +205,7 @@ def alt_tree_map(t, map_fn):
     for b in t.branches:
         for sub_b in b.branches:
             alt_tree_map(sub_b, map_fn)
+    return t
 
 
 class Link:
@@ -249,4 +252,19 @@ class Tree:
 
     def is_leaf(self):
         return not self.branches
+
+    def __repr__(self):
+        if self.branches:
+            branch_str = ', ' + repr(self.branches)
+        else:
+            branch_str = ''
+        return 'Tree({0}{1})'.format(self.label, branch_str)
+
+    def __str__(self):
+        def print_tree(t, indent=0):
+            tree_str = '  ' * indent + str(t.label) + "\n"
+            for b in t.branches:
+                tree_str += print_tree(b, indent + 1)
+            return tree_str
+        return print_tree(self).rstrip()
 
