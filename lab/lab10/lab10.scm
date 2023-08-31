@@ -16,7 +16,7 @@
 
 
 (define (make-adder num)
-  'YOUR-CODE-HERE
+  (lambda (inc) (+ num inc))
 )
 
 ;;; Tests
