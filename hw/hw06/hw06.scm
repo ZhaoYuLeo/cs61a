@@ -11,7 +11,11 @@
 
 
 (define (sign num)
-  'YOUR-CODE-HERE
+  (cond
+    ((< num 0) -1)
+    ((= num 0) 0)
+    ((> num 0) 1)
+  )
 )
 
 
